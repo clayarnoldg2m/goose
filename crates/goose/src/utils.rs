@@ -77,8 +77,7 @@ pub fn truncate_message_for_display(message: &Message) -> Message {
                         .iter()
                         .map(|content| {
                             if let Some(text) = content.as_text() {
-                                if let Some(truncated) =
-                                    truncate_tool_text_for_display(&text.text)
+                                if let Some(truncated) = truncate_tool_text_for_display(&text.text)
                                 {
                                     content_changed = true;
                                     return Content::text(truncated);
@@ -232,7 +231,9 @@ mod tests {
         let long_text: String = "line\n".repeat(5000);
         let tool_resp = MessageContent::tool_response(
             "test-id".to_string(),
-            Ok(CallToolResult::success(vec![Content::text(long_text.clone())])),
+            Ok(CallToolResult::success(vec![Content::text(
+                long_text.clone(),
+            )])),
         );
         let msg = Message::new(Role::Assistant, 0, vec![tool_resp]);
         let truncated = truncate_message_for_display(&msg);

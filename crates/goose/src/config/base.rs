@@ -1225,11 +1225,17 @@ mod tests {
         config.set_param("dotfile_key", "dotfile_value")?;
 
         // The symlink should still exist and still be a symlink
-        assert!(symlink_path.is_symlink(), "Symlink should be preserved after write");
+        assert!(
+            symlink_path.is_symlink(),
+            "Symlink should be preserved after write"
+        );
 
         // The real file should contain the written data
         let real_content = std::fs::read_to_string(&real_config)?;
-        assert!(real_content.contains("dotfile_key"), "Real file should have the written data");
+        assert!(
+            real_content.contains("dotfile_key"),
+            "Real file should have the written data"
+        );
 
         // Reading through the symlink should work
         let value: String = config.get_param("dotfile_key")?;
